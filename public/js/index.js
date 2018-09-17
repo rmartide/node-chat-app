@@ -28,13 +28,14 @@ socket.on('newLocationMessage', function(message) {
 });
 
 $(document).ready(function() {
+    var messageTextbox = $('[name=message]');
     $('#message-form').on('submit', function(e) {
         e.preventDefault();
         socket.emit('createMessage', {
             from: 'User',
-            text: $('[name=message]').val()
+            text: messageTextbox.val()
         }, function (data) {
-            console.log('Got it', data);
+            messageTextbox.val('');
         });        
     });
 
