@@ -8,7 +8,7 @@ function scrollToBottom() {
 
     var clientHeight = messages.prop('clientHeight');
     var scrollTop = messages.prop('scrollTop');
-    var scrollHeight= messages.prop('scrollHeight');
+    var scrollHeight = messages.prop('scrollHeight');
     var newMessageHeight = newMessage.innerHeight();
     var lastmessageHeight = newMessage.prev().innerHeight();
 
@@ -18,11 +18,30 @@ function scrollToBottom() {
 }
 
 socket.on('connect', function () {
-    console.log('Connected to server');
+    var params = $.deparam(window.location.search);
+
+    socket.emit('join', params, function (err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+            console.log('No error');
+        }
+    });
 });
 
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
+});
+
+socket.on('updateUserList', function(users) {
+    var ol = $('<ol></ol>');
+
+    users.forEach(function (user) {
+        ol.append($('<li></li>').text(user));
+    });
+
+    $('#users').html(ol);
 });
 
 socket.on('newMessage', function (message) {
@@ -38,7 +57,7 @@ socket.on('newMessage', function (message) {
     scrollToBottom();
 });
 
-socket.on('newLocationMessage', function(message) {
+socket.on('newLocationMessage', function (message) {
     var formattedTime = moment(message.createdAt).format('h:mm a');
     var template = $('#location-message-template').html();
     var html = Mustache.render(template, {
@@ -51,21 +70,21 @@ socket.on('newLocationMessage', function(message) {
     scrollToBottom();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     var messageTextbox = $('[name=message]');
-    $('#message-form').on('submit', function(e) {
+    $('#message-form').on('submit', function (e) {
         e.preventDefault();
         socket.emit('createMessage', {
             from: 'User',
             text: messageTextbox.val()
         }, function (data) {
             messageTextbox.val('');
-        });        
+        });
     });
 
     locationButton = $('#send-location');
-    locationButton.on('click', function() {
-        if(!navigator.geolocation) {
+    locationButton.on('click', function () {
+        if (!navigator.geolocation) {
             return alert('Geolocation not supported by your browser.');
         }
 
