@@ -25,6 +25,14 @@ class Users {
     getUserList(room) {
         return this.users.filter(user => user.room === room).map(user => user.name);
     }
+
+    usernameExists(username, room) {
+        var userList = this.getUserList(room);
+        var arrayNotEmpty = userList.length !== 0;
+        var userFound = userList.findIndex(name => name === username) !== -1;
+        var res = arrayNotEmpty && userFound;
+        return res;
+    }
 }
 
 module.exports = { Users };

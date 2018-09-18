@@ -74,4 +74,16 @@ describe('Users', () => {
 
         expect(userList).toEqual(['Jen']);
     });
+
+    it('should return true if the username exists on a room', () => {
+        var usernameExists = users.usernameExists('Mike', 'Node Course');
+
+        expect(usernameExists).toBeTruthy();
+    });
+
+    it('should return false if the username does not exist on a room', () => {
+        var usernameExists = users.usernameExists('Mike', 'React Course');
+
+        expect(usernameExists).toBeFalsy();
+    });
 });
