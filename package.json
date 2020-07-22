@@ -19,14 +19,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
-    "moment": "^2.22.2",
-    "socket.io": "^2.1.1"
+    "express": "^4.17.1",
+    "moment": "^2.27.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "expect": "^23.6.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.4",
-    "reload": "^2.3.1"
+    "expect": "^26.1.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "reload": "^3.1.0"
   }
 }
